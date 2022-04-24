@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Retrieves</title>
+<style>
+    body {
+        
+        background-attachment: fixed;
+        background-image: linear-gradient(blue, green);
+    }
+    
+    table, th, td {
+        width: 100px;
+        border: 1px solid;
+        background-color: white;
+        cursor: pointer;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script> 
+
+
+//when the page is fully loaded
+$(document).ready(function () {
+
+  $.getJSON("https://jsonplaceholder.typicode.com/users", function (data) {
+
+      var user = '';
+
+      //Iterate
+      $.each(data, function (index, value) {
+
+
+          user += '<tr onclick="showPosts('+value.id+')">'
+          user += '<td>' + value.id + '</td>'
+          user += '</tr>'
+      });
+      
+      //Insert
+      $('#users').append(user)
+  });
+});
+
+function showPosts(val){
+
+
+    $.getJSON('https://jsonplaceholder.typicode.com/posts?userId='+val, function (data) {
+
+
+        var userPosts = ''
+        //Iterate
+        $.each(data, function (index, value) {
+
+
+          //Insert
+           userPosts += "Post Number:"+ value.id +" " + value.title + '\n'
+           
+        });
+
+
+    alert(userPosts)
+    });
+}
+</script>
+</head>
+
+<body>
+
+    <table id="users">
+
+        <thead>
+        <tr>
+        <th>id</th>
+        </tr>
+        </thead> 
+        
+    </table>
+
+    <p><b>CLICK ON A NUMBER TO SEE POSTS</b></p>
+
+</body>
+
+</html>
